@@ -1,4 +1,5 @@
 from ast import mod
+from distutils.command.upload import upload
 from random import choices
 from django.db import models
 from django.contrib.auth.models import User
@@ -20,13 +21,13 @@ class Product(models.Model):
     price = models.IntegerField()
     size = models.CharField(max_length=20, blank=True, null=True)
     inStock = models.IntegerField(default=0)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='uploads/')
     create_at = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
 
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Order(models.Model):
