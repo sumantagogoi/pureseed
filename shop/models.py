@@ -1,6 +1,7 @@
 from ast import mod
 from distutils.command.upload import upload
 from random import choices
+from sre_constants import CATEGORY
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,13 +14,24 @@ STATUS = (
     ('4', 'Delivered')
 )
 
+CATEGORY = (
+    ('1', 'Smoked Meats'),
+    ('2', 'Unmixed Natural Rice'),
+    ('3', 'Condiments'),
+    ('4', 'Ready To Eat')
+)
+SIZE = (
+    ('1', 'KG'),
+    ('2', 'Grams')
+)
+
 
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=200)
-    category = models.CharField(max_length=200)
+    category = models.CharField(max_length=200,choices=CATEGORY, blank=True, null=True)
     price = models.IntegerField()
-    size = models.CharField(max_length=20, blank=True, null=True)
+    size = models.CharField(max_length=20,choices=SIZE, blank=True, null=True)
     inStock = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True, upload_to='uploads/')
     create_at = models.DateTimeField(auto_now_add=True)
