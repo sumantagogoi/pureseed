@@ -32,6 +32,7 @@ class Product(models.Model):
     category = models.CharField(max_length=200,choices=CATEGORY, blank=True, null=True)
     price = models.IntegerField()
     size = models.CharField(max_length=20,choices=SIZE, blank=True, null=True)
+    qty = models.CharField(max_length=100, blank=True, null=True)
     inStock = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True, upload_to='uploads/')
     create_at = models.DateTimeField(auto_now_add=True)
