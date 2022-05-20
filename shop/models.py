@@ -8,21 +8,21 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 STATUS = (
-    ('1', 'Order Accepted'),
-    ('2', 'Cooking'),
-    ('3', 'Out For Delivery'),
-    ('4', 'Delivered')
+    ('order_accepted', 'Order Accepted'),
+    ('cooking', 'Cooking'),
+    ('outForDelivery', 'Out For Delivery'),
+    ('delivered', 'Delivered')
 )
 
 CATEGORY = (
-    ('1', 'Smoked Meats'),
-    ('2', 'Unmixed Natural Rice'),
-    ('3', 'Condiments'),
-    ('4', 'Ready To Eat')
+    ('smoked_meats', 'Smoked Meats'),
+    ('natural_rice', 'Unmixed Natural Rice'),
+    ('condiments', 'Condiments'),
+    ('ready_to_eat', 'Ready To Eat')
 )
 SIZE = (
-    ('1', 'KG'),
-    ('2', 'Grams')
+    ('kg', 'KG'),
+    ('gm', 'Grams')
 )
 
 
