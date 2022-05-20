@@ -30,6 +30,7 @@ class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=200,choices=CATEGORY, blank=True, null=True)
+    category_image = models.ImageField(null=True, blank=True, upload_to='uploads/')
     price = models.IntegerField()
     size = models.CharField(max_length=20,choices=SIZE, blank=True, null=True)
     qty = models.CharField(max_length=100, blank=True, null=True)
