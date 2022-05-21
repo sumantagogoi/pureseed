@@ -1,13 +1,18 @@
 from dataclasses import fields
 from xml.parsers.expat import model
+
 from rest_framework import serializers
-from shop.models import Product
+from shop.models import Product, Category
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
+        fields = '__all__'
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):

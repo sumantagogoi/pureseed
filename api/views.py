@@ -1,10 +1,12 @@
 from http import server
 from django.shortcuts import render
-from .serializers import ProductSerializer, UserSerializerWithToken
+
+
+from .serializers import CategorySerializer, ProductSerializer, UserSerializerWithToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
-from shop.models import Product
+from shop.models import Product, Category
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
@@ -25,6 +27,12 @@ def getSingleProduct(request, pk):
     product = Product.objects.get(_id=pk)
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['GET'])
+def getAllCategories(request):
+     categories = Category.objects.all()
+     serializer = CategorySerializer(categories, many=True)
+     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # User Login View with JWT Tokens
