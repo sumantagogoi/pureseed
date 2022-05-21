@@ -26,6 +26,14 @@ SIZE = (
 )
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=250, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='uploads/')
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.title
+
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=200)
