@@ -2,6 +2,7 @@ from ast import mod
 from distutils.command.upload import upload
 from random import choices
 from sre_constants import CATEGORY
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -14,12 +15,7 @@ STATUS = (
     ('delivered', 'Delivered')
 )
 
-CATEGORY = (
-    ('smoked_meats', 'Smoked Meats'),
-    ('natural_rice', 'Unmixed Natural Rice'),
-    ('condiments', 'Condiments'),
-    ('ready_to_eat', 'Ready To Eat')
-)
+
 SIZE = (
     ('kg', 'KG'),
     ('gm', 'Grams')
@@ -37,8 +33,7 @@ class Category(models.Model):
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=200)
-    category = models.CharField(max_length=200,choices=CATEGORY, blank=True, null=True)
-    category_image = models.ImageField(null=True, blank=True, upload_to='uploads/')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     price = models.IntegerField()
     size = models.CharField(max_length=20,choices=SIZE, blank=True, null=True)
     qty = models.CharField(max_length=100, blank=True, null=True)
