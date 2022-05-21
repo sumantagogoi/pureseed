@@ -131,8 +131,8 @@ STATICFILES_DIRS = [
 # STATIC_ROOT = (BASE_DIR / 'static')
     
 
-MEDIA_ROOT = 'static/images'
-MEDIA_URL = '/images/'
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
