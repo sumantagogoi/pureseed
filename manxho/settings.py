@@ -127,8 +127,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-if not DEBUG:
-    STATIC_ROOT = (BASE_DIR / 'static')
+
+# STATIC_ROOT = (BASE_DIR / 'static')
     
 
 MEDIA_ROOT = 'static/images'
