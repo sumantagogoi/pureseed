@@ -25,20 +25,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField(read_only=True)
+    
     _id = serializers.SerializerMethodField(read_only=True)
     isAdmin = serializers.SerializerMethodField(read_only=True)
 
 
     class Meta:
-        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name', 'name', 'isAdmin']
+        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name', 'isAdmin']
 
-
-    def get_name(self,obj):
-        name = obj.first_name 
-        if name == "":
-            name = obj.email 
-        return name
 
     def get__id(self, obj):
          return obj.id
@@ -51,7 +45,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name', 'name', 'isAdmin', 'token']
+        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name',  'isAdmin', 'token']
 
     def get_token(self, user):
         token = RefreshToken.for_user(user)

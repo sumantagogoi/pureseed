@@ -2,7 +2,7 @@ from http import server
 from django.shortcuts import render
 
 
-from .serializers import CategorySerializer, ProductSerializer, UserSerializerWithToken
+from .serializers import CategorySerializer, ProductSerializer, UserSerializerWithToken, UserSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
@@ -66,4 +66,4 @@ def registerUser(request):
         serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data, status = status.HTTP_200_OK)
     except:
-        return Response(status=status.HTTP_200_ERROR)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
