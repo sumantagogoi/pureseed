@@ -60,7 +60,7 @@ class Order(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
-        return self._id
+        return str(self._id)
 
 
 class OrderItem(models.Model):
@@ -73,7 +73,7 @@ class OrderItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.order._id
+        return str(self.order._id)
 
 class ShippingAddress(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
@@ -85,7 +85,7 @@ class ShippingAddress(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
-        return self.order._id
+        return str(self.order._id)
 
 
     
