@@ -1,12 +1,15 @@
 from http import server
 from django.shortcuts import render
 
+# from backend.manxho.shop.models import OrderItem
+
 
 from .serializers import CategorySerializer, ProductSerializer, UserSerializerWithToken, UserSerializer
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
-from shop.models import Product, Category
+from shop.models import Product, Category, Order, OrderItem, ShippingAddress
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
@@ -67,3 +70,43 @@ def registerUser(request):
         return Response(serializer.data, status = status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createOrder(request):
+    user = request.user
+    data = request.data
+
+    orderItems = data['orderItems']
+    if orderItems and len(orderItems) < 1:
+        return Response({'message':'No Order Item'})
+    else:
+        # creat a order 
+        order = Order.objects.create(
+            user = user,
+            totalPrice = data['totalPrice']
+        )
+
+        # create Shipping Address for the order 
+        shippingAddress = ShippingAddress.objects.create(
+            order = order,
+            address = data['shippingAddress']['address'],
+            city =  data['shippingAddress']['city'],
+            state =  data['shippingAddress']['state'],
+            zipcode =  data['shippingAddress']['zipcode'],
+            country = data['shippingAddress']['country'],
+
+        )
+
+        # Create order Item and set the order to OrderItems relationship
+        for i in orderItems:
+            product = Product.objects.get(_id=i['_id'])
+
+            item = OrderItem.objects.create(
+                user = user,
+                product = product,
+                qty = i['qty'],
+                price = product.price,
+            )
+        return Response({'message':'Order Successfully Created'}, status=status.HTTP_200_OK)
+
