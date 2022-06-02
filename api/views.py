@@ -104,6 +104,7 @@ def createOrder(request):
 
             item = OrderItem.objects.create(
                 user = user,
+                order=order,
                 product = product,
                 qty = i['qty'],
                 price = product.price,
