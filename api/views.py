@@ -4,7 +4,7 @@ from django.shortcuts import render
 # from backend.manxho.shop.models import OrderItem
 
 
-from .serializers import CategorySerializer, ProductSerializer, UserSerializerWithToken, UserSerializer
+from .serializers import CategorySerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -109,5 +109,6 @@ def createOrder(request):
                 qty = i['qty'],
                 price = product.price,
             )
+            serializer = OrderSerializer(order, many=False)
         return Response({'message':'Order Successfully Created'}, status=status.HTTP_200_OK)
 

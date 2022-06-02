@@ -65,7 +65,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete= models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete= models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     qty = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=7)
@@ -73,10 +73,10 @@ class OrderItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.order)
+        return str(self.order._id)
 
 class ShippingAddress(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     address = models.CharField(max_length=400, blank=True, null=True)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
