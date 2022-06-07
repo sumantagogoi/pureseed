@@ -187,8 +187,3 @@ SIMPLE_JWT = {
 
 
 
-
-try:
-    from .local import *
-except ImportError:
-    pass

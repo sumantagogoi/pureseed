@@ -1,6 +1,13 @@
 from http import server
 from django.shortcuts import render
 
+from django.contrib.auth.models import User
+from accounts.models import ResetPasswordToken
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from rest_framework.views import APIView 
+
 # from backend.manxho.shop.models import OrderItem
 
 
@@ -12,6 +19,7 @@ from rest_framework.response import Response
 from shop.models import Product, Category, Order, OrderItem, ShippingAddress
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+import random, string
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -111,4 +119,31 @@ def createOrder(request):
             )
             serializer = OrderSerializer(order, many=False)
         return Response({'message':'Order Successfully Created'}, status=status.HTTP_200_OK)
+
+
+
+
+class ForgotPasswordView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        email = data['email']
+        user = User.objects.get(email=email)
+        token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _i in range(12))
+
+        ResetPasswordToken.objects.create(
+            email=email,token=token,
+        )
+
+        message = render_to_string("password_reset_email.html", {
+            'user':user,
+            'token':token,
+        })
+
+        send_mail(
+            subject='Password Reset Link',
+            message=message,
+            recipient_list=[email],
+            from_email= 'nehatkhan82@gmail.com',
+        )
+        return Response({'message':'Reset Link Send Successfully'}, status=status.HTTP_200_OK)
 
