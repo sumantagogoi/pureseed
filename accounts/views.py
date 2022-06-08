@@ -1,4 +1,5 @@
 
+import email
 from django.contrib.auth.models import User
 from .models import ResetPasswordToken
 from django.contrib.sites.shortcuts import get_current_site
@@ -37,7 +38,3 @@ class ForgotPasswordView(APIView):
             from_email= 'nehatkhan82@gmail.com',
         )
         return Response({'message':'Reset Link Send Successfully'}, status=status.HTTP_200_OK)
-
-
-
-    

@@ -147,3 +147,25 @@ class ForgotPasswordView(APIView):
         )
         return Response({'message':'Reset Link Send Successfully'}, status=status.HTTP_200_OK)
 
+
+class ChangeForgotPassword(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data
+
+        if data['password'] != data['confirm_password']:
+            raise Exception.ApiException('Password Does not match')
+
+        reset_token = ResetPasswordToken.objects.filter(token= data['token']).first()
+
+        if not reset_token:
+            raise Exception.ApiException('Invalid Link')
+
+        user = User.objects.filter(email=reset_token.email).first()
+        if not user:
+            raise Exception.ApiException('User Not Found')
+
+        user.set_password(data['password'])
+        user.save()
+        reset_token.delete()
+        return Response({'message:Password Successfully Reset'}, status=status.HTTP_200_OK)
+
