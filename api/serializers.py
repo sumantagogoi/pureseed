@@ -4,7 +4,7 @@ from xml.parsers.expat import model
 
 
 from rest_framework import serializers
-from shop.models import Product, Category, OrderItem, ShippingAddress,Order
+from shop.models import Product, Category, OrderItem, ShippingAddress,Order, Coupons
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -88,3 +88,8 @@ class OrderSerializer(serializers.ModelSerializer):
             user = obj.user
             serializer = UserSerializer(user, many=False)
             return serializer.data
+
+class CouponsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupons
+        fields = ['id', 'discount', 'is_active', 'code', 'discount_type', 'max_limit']

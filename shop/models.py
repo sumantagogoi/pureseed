@@ -19,7 +19,12 @@ STATUS = (
 
 SIZE = (
     ('kg', 'KG'),
-    ('gm', 'Grams')
+    ('gram', 'Grams')
+)
+
+DISCOUNT_TYPE = (
+    ('flat', 'flat'),
+    ('percent', 'percent')
 )
 
 
@@ -93,9 +98,11 @@ class Coupons(models.Model):
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()
     discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    discount_type = models.CharField(max_length=10, choices=DISCOUNT_TYPE, blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    max_limit = models.IntegerField(default=1)
 
     def __str__(self):
         return self.code
 
-        
+   

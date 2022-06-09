@@ -7,7 +7,7 @@ urlpatterns =[
     path('product/<int:pk>/', getSingleProduct),
     path('categories/', getAllCategories),
     path('create_order/',createOrder),
-    path('/validate_coupon/', ValidateCoupon.as_view()),
+    path('validate_coupon/', ValidateCoupon.as_view()),
 
     # Client Authentication
     path('users/login/', MyTokenObtainpairView.as_view()),

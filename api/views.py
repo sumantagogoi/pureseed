@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 # from backend.manxho.shop.models import OrderItem
 
 
-from .serializers import CategorySerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer
+from .serializers import CategorySerializer, CouponsSerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -24,6 +24,8 @@ import random, string
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+from django.utils import timezone
 # Create your views here.
 
 
@@ -177,11 +179,15 @@ class ValidateCoupon(APIView):
         coupon_code = data['coupon_code']
 
         # Check in backennd that coupon is exists
-        coupon = Coupons.objects.get(code__iexact =coupon_code, valid_from__lte=now, valid_to__gte= now, is_active=True)
-        if not coupon:
-            raise Exception.ApiException('Invalid Coupon Code')
-        coupon_discount = coupon.discount
-        return Response({"discount":coupon_discount}, status=status.HTTP_200_OK)
+
+        try:
+            coupon = Coupons.objects.get(code__iexact =coupon_code, valid_from__lte=now, valid_to__gte= now, is_active=True)
+            # if not coupon:
+            #     raise Exception.ApiException('Invalid Coupon Code')
+            serializer = CouponsSerializer(coupon, many=False)
+            return Response( serializer.data, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({"message":"Invalid Coupon"}, status = status.HTTP_400_BAD_REQUEST)
 
 
 
