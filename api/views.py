@@ -1,4 +1,5 @@
 from http import server
+from time import timezone
 from django.shortcuts import render
 
 from django.contrib.auth.models import User
@@ -16,7 +17,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
-from shop.models import Product, Category, Order, OrderItem, ShippingAddress
+from shop.models import Product, Category, Order, OrderItem, ShippingAddress, Coupons
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 import random, string
@@ -168,4 +169,19 @@ class ChangeForgotPassword(APIView):
         user.save()
         reset_token.delete()
         return Response({'message:Password Successfully Reset'}, status=status.HTTP_200_OK)
+
+class ValidateCoupon(APIView):
+    def post(self, request, *args, **kwargs):
+        now = timezone.now()
+        data = request.data
+        coupon_code = data['coupon_code']
+
+        # Check in backennd that coupon is exists
+        coupon = Coupons.objects.get(code__iexact =coupon_code, valid_from__lte=now, valid_to__gte= now, is_active=True)
+        if not coupon:
+            raise Exception.ApiException('Invalid Coupon Code')
+        coupon_discount = coupon.discount
+        return Response({"discount":coupon_discount}, status=status.HTTP_200_OK)
+
+
 

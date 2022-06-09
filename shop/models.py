@@ -5,6 +5,7 @@ from sre_constants import CATEGORY
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
@@ -87,3 +88,14 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return str(self.order._id)
 
+class Coupons(models.Model):
+    code = models.CharField(max_length=20)
+    valid_from = models.DateTimeField()
+    valid_to = models.DateTimeField()
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+
+        
