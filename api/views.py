@@ -182,10 +182,11 @@ class ValidateCoupon(APIView):
 
         try:
             coupon = Coupons.objects.get(code__iexact =coupon_code, valid_from__lte=now, valid_to__gte= now, is_active=True)
+            if coupon.max_limit > 0 :
             # if not coupon:
             #     raise Exception.ApiException('Invalid Coupon Code')
-            serializer = CouponsSerializer(coupon, many=False)
-            return Response( serializer.data, status=status.HTTP_200_OK)
+                serializer = CouponsSerializer(coupon, many=False)
+                return Response( serializer.data, status=status.HTTP_200_OK)
         except Exception:
             return Response({"message":"Invalid Coupon"}, status = status.HTTP_400_BAD_REQUEST)
 
