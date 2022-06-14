@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    
+
     # Local Apps
    'shop.apps.ShopConfig',
    'accounts.apps.AccountsConfig',
@@ -130,7 +130,7 @@ STATIC_URL = '/static/'
 
 
 # STATIC_ROOT = (BASE_DIR / 'static')
-    
+
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
@@ -144,12 +144,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-    
+
 }
 
 SIMPLE_JWT = {
@@ -197,10 +197,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 try:
-    from .local import *
+    from .local_settings import *
 except ImportError:
     pass
-
-
-
-
