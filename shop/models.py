@@ -59,6 +59,7 @@ class Order(models.Model):
     taxPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     shippingPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     totalPrice = models.DecimalField(max_digits=7, decimal_places=2)
+    coupon = models.CharField(max_length=20, blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS, blank=True, null=True)
     isPaid = models.BooleanField(default=False)
     isDelivered = models.BooleanField(default=False)
@@ -88,6 +89,8 @@ class ShippingAddress(models.Model):
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
