@@ -1,3 +1,4 @@
+from genericpath import exists
 from http import server
 from time import timezone
 from django.shortcuts import render
@@ -95,7 +96,9 @@ def createOrder(request):
         # creat a order 
         order = Order.objects.create(
             user = user,
-            totalPrice = data['totalPrice']
+            totalPrice = data['totalPrice'],
+            coupon = data['coupon'],
+            shippingPrice = data['shippingPrice'],
         )
 
         # create Shipping Address for the order 
@@ -103,14 +106,25 @@ def createOrder(request):
             order = order,
             address = data['shippingAddress']['address'],
             city =  data['shippingAddress']['city'],
-            state =  data['shippingAddress']['state'],
+            state =  data['shippingAddress']['stateValue'],
+            phone_number = data['shippingAddress']['phoneNumber'],
             zipcode =  data['shippingAddress']['zipcode'],
             country = data['shippingAddress']['country'],
 
+
         )
+        try:
+            coupon = Coupons.objects.get(code = order.coupon)
+            coupon.max_limit -=1
+            coupon.save()
+        except:
+            print('code not found')
+
+            
 
         # Create order Item and set the order to OrderItems relationship
         for i in orderItems:
+            print(i['_id'])
             product = Product.objects.get(_id=i['_id'])
 
             item = OrderItem.objects.create(
@@ -120,7 +134,8 @@ def createOrder(request):
                 qty = i['qty'],
                 price = product.price,
             )
-            serializer = OrderSerializer(order, many=False)
+        
+        serializer = OrderSerializer(order, many=False)
         return Response({'message':'Order Successfully Created'}, status=status.HTTP_200_OK)
 
 
