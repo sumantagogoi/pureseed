@@ -6,6 +6,7 @@ from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+import datetime
 
 # Create your models here.
 
@@ -54,44 +55,43 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     payment_method = models.CharField(max_length=100, blank=True, null=True)
     taxPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     shippingPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
-    totalPrice = models.DecimalField(max_digits=7, decimal_places=2)
+    totalPrice = models.DecimalField(max_digits=7, decimal_places=2, default = 0)
     coupon = models.CharField(max_length=20, blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS, blank=True, null=True)
     isPaid = models.BooleanField(default=False)
     isDelivered = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    _id = models.AutoField(primary_key=True, editable=False)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return str(self._id)
 
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete= models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
-    qty = models.IntegerField()
-    price = models.DecimalField(decimal_places=2, max_digits=7)
     _id = models.AutoField(primary_key=True, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete= models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    qty = models.IntegerField(null=True, blank=True)
+    price = models.DecimalField(decimal_places=2, max_digits=7, null=True, blank=True)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return str(self.order._id)
 
 class ShippingAddress(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    _id = models.AutoField(primary_key=True, editable=False)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=400, blank=True, null=True)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=50, null=True, blank=True)
     zipcode = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-
-    _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
         return str(self.order._id)
@@ -107,5 +107,3 @@ class Coupons(models.Model):
 
     def __str__(self):
         return self.code
-
-   
