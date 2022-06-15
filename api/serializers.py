@@ -33,6 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
     class Meta:
+        model = User
         fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name', 'isAdmin']
 
 
@@ -73,21 +74,22 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 
-        def get_orderItems(self, obj):
-            items = obj.orderitem.set.all()
-            serializer = OrderItemSerializer(items, many=True)
-            return serializer.data
-        def get_shippingAddress(self, obj):
-            try:
-                address = ShippingAddressSerializer(obj.shippingAddress, many=False).data
-            except:
-                address= False
-            return address
+    def get_orderItems(self, obj):
+        items = obj.orderitem_set.all()
+        serializer = OrderItemSerializer(items, many=True)
+        return serializer.data
 
-        def get_user(self, obj):
-            user = obj.user
-            serializer = UserSerializer(user, many=False)
-            return serializer.data
+    def get_shippingAddress(self, obj):
+        try:
+            address = ShippingAddressSerializer(obj.shippingAddress, many=False).data
+        except:
+            address= False
+        return address
+
+    def get_user(self, obj):
+        user = obj.user
+        serializer = UserSerializer(user, many=False)
+        return serializer.data
 
 class CouponsSerializer(serializers.ModelSerializer):
     class Meta:

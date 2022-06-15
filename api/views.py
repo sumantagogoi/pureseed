@@ -118,7 +118,7 @@ def createOrder(request):
             coupon.max_limit -=1
             coupon.save()
         except:
-            print('code not found')
+            pass
 
             
 
@@ -204,6 +204,14 @@ class ValidateCoupon(APIView):
                 return Response( serializer.data, status=status.HTTP_200_OK)
         except Exception:
             return Response({"message":"Invalid Coupon"}, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getAllOrdersByUser(request):
+    user = request.user
+    order = user.order_set.all()
+    serializer = OrderSerializer(order, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
