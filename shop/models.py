@@ -76,6 +76,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     qty = models.IntegerField()
     price = models.DecimalField(decimal_places=2, max_digits=7)
+    image = models.CharField(max_length=250, blank=True, null=True)
     _id = models.AutoField(primary_key=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

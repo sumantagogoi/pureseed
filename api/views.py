@@ -133,6 +133,7 @@ def createOrder(request):
                 product = product,
                 qty = i['qty'],
                 price = product.price,
+                image= product.image.url,
             )
         
         serializer = OrderSerializer(order, many=False)
