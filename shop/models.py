@@ -76,17 +76,10 @@ class OrderItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     order = models.ForeignKey(Order, on_delete= models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
-<<<<<<< HEAD
-    qty = models.IntegerField(null=True, blank=True)
-    price = models.DecimalField(decimal_places=2, max_digits=7, null=True, blank=True)
+    qty = models.IntegerField(null=True)
+    price = models.DecimalField(decimal_places=2, max_digits=7, null=True)
     created_at = models.DateTimeField(default=datetime.datetime.now)
-=======
-    qty = models.IntegerField()
-    price = models.DecimalField(decimal_places=2, max_digits=7)
     image = models.CharField(max_length=250, blank=True, null=True)
-    _id = models.AutoField(primary_key=True, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
->>>>>>> 64856ff405e7615ac1fbc871fb132a71a4d179e2
 
     def __str__(self):
         return str(self.order._id)
