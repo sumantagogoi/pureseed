@@ -188,6 +188,40 @@ class ChangeForgotPassword(APIView):
         reset_token.delete()
         return Response({'message:Password Successfully Reset'}, status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def updatePassword(request):
+    user = request.user
+    data = request.data
+    
+    if data['password'] != data['confirm_password']:
+        raise Exception.ApiException('Password Does Not Match')
+        
+    user.set_password(data['password'])
+    user.save()
+    return Response({'message':'Password Successfully Updated'}, status = status.HTTP_200_OK)
+
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def updateUserDetails(request):
+    user = request.user
+    data= request.data
+    first_name = data['first_name']
+    last_name = data['last_name']
+    try:
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        return Response({'message':'Successfully Update'}, status=status.HTTP_200_OK)
+    
+    except:
+       return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+
 class ValidateCoupon(APIView):
     def post(self, request, *args, **kwargs):
         now = timezone.now()
