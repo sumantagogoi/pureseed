@@ -215,4 +215,19 @@ def getAllOrdersByUser(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getSingleOrderByUser(request, pk):
+    user = request.user
+    order = Order.objects.get(_id=pk)
+    try:
+        if user.is_staff or order.user == user:
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message':'Not Authorized'}, status = status.HTTP_401_UNAUTHORIZED)
+
+    except:
+        return Response({'message':'Sorry order not found'}, status=status.HTTP_400_BAD_REQUEST)
+
 
