@@ -70,6 +70,9 @@ class Order(models.Model):
     def __str__(self):
         return str(self._id)
 
+    class Meta:
+        ordering = ['-created_at']
+   
 
 class OrderItem(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
@@ -83,6 +86,9 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return str(self.order._id)
+        
+    class Meta:
+        ordering = ['-created_at']
 
 class ShippingAddress(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
