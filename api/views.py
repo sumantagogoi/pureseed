@@ -214,7 +214,8 @@ def updateUserDetails(request):
         user.first_name = first_name
         user.last_name = last_name
         user.save()
-        return Response({'message':'Successfully Update'}, status=status.HTTP_200_OK)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     except:
        return Response(status=status.HTTP_400_BAD_REQUEST)
