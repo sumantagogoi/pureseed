@@ -27,6 +27,13 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.utils import timezone
+
+
+
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView
+
 # Create your views here.
 
 
@@ -82,6 +89,17 @@ def registerUser(request):
         return Response(serializer.data, status = status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = 'http://127.0.0.1:8000/api/users/'
+    client_class = OAuth2Client
+
+
+
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
