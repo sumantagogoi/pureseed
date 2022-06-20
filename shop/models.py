@@ -93,7 +93,7 @@ class OrderItem(models.Model):
 
 class ShippingAddress(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=400, blank=True, null=True)
     city = models.CharField(max_length=50, null=True, blank=True)
     state = models.CharField(max_length=50, null=True, blank=True)
