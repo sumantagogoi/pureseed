@@ -79,6 +79,7 @@ class OrderItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     order = models.ForeignKey(Order, on_delete= models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
     qty = models.IntegerField(null=True)
     price = models.DecimalField(decimal_places=2, max_digits=7, null=True)
     created_at = models.DateTimeField(default=datetime.datetime.now)
