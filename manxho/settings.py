@@ -161,6 +161,7 @@ REST_FRAMEWORK = {
     )
 
 }
+REST_USE_JWT = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
