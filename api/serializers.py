@@ -44,13 +44,13 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.is_staff
 
 class UserSerializerWithToken(UserSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
+    access_token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name',  'isAdmin', 'token']
+        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name',  'isAdmin', 'access_token']
 
-    def get_token(self, user):
+    def get_access_token(self, user):
         token = RefreshToken.for_user(user)
         return str(token.access_token)
 
