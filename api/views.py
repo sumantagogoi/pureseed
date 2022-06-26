@@ -96,6 +96,12 @@ class GoogleLogin(SocialLoginView):
     callback_url = 'http://127.0.0.1:8000/api/users/'
     client_class = OAuth2Client
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getProfile(request):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data, status = status.HTTP_200_OK)
 
 
 
