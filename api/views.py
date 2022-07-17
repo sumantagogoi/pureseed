@@ -162,7 +162,7 @@ def createOrder(request):
             )
         
         serializer = OrderSerializer(order, many=False)
-        return Response({'message':'Order Successfully Created'}, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
