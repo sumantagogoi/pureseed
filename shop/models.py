@@ -65,6 +65,7 @@ class Order(models.Model):
     status = models.CharField(max_length=50, choices=STATUS, blank=True, null=True)
     isPaid = models.BooleanField(default=False)
     isDelivered = models.BooleanField(default=False)
+    transactionId = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
