@@ -11,10 +11,13 @@ import datetime
 # Create your models here.
 
 STATUS = (
-    ('order_accepted', 'Order Accepted'),
-    ('cooking', 'Cooking'),
-    ('outForDelivery', 'Out For Delivery'),
-    ('delivered', 'Delivered')
+    ('order_confirmed', 'Order Confirmed'),
+    ('processing', 'Processing'),
+    ('dispatched', 'Dispatched'),
+    ('delivered', 'Delivered'), 
+    ('returned', 'Returned'), 
+    ('cancelled', 'Cancelled'), 
+    ('refunded', 'Refunded'), 
 )
 
 
@@ -33,6 +36,7 @@ class Category(models.Model):
     title = models.CharField(max_length=250, blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='uploads/')
     _id = models.AutoField(primary_key=True, editable=False)
+    status = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return self.title
