@@ -60,6 +60,7 @@ class Product(models.Model):
 
 class Order(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
+    custom_order_id = models.CharField(max_length=255, default='WEB-00001', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     payment_method = models.CharField(max_length=100, blank=True, null=True)
     taxPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
@@ -78,6 +79,18 @@ class Order(models.Model):
     class Meta:
         ordering = ['-created_at']
    
+    def save(self, *args, **kwargs):
+        print('Saving Order')
+        last_order = Order.objects.all().order_by('_id').last()
+        if last_order:
+            last_custom_id = int(last_order.custom_order_id.split('-')[-1])
+        else:
+            last_custom_id = 0
+        self.custom_order_id = 'WEB-{:05}'.format(last_custom_id + 1)
+        print(f'custom_id: {self.custom_order_id}')
+        super().save(*args, **kwargs)
+
+
 
 class OrderItem(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
@@ -95,6 +108,8 @@ class OrderItem(models.Model):
         
     class Meta:
         ordering = ['-created_at']
+
+    
 
 class ShippingAddress(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
