@@ -59,3 +59,17 @@ def customers(request):
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
     return render(request, 'list-customers.html', context)
+
+
+def confirmUPI(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+    username = request.user.username
+
+    data = Order.objects.filter(status="upi_unconfirmed")
+
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+
+    return render(request, 'list-orders.html', context)
+

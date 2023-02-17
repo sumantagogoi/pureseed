@@ -7,4 +7,5 @@ path('', views.index),
 path('customers/', views.customers),
 path('cash-register/', views.cashReg),
 path('manage-items/', views.items),
+path('confirm-upi/', views.confirmUPI),
 ]
