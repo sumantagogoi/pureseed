@@ -8,6 +8,7 @@ urlpatterns =[
     path('categories/', getAllCategories),
     path('create_order/',createOrder),
     path('edit_order/',editOrder),
+    path('upi_order/', upiOrder),
     path('validate_coupon/', ValidateCoupon.as_view()),
 
     # Client Authentication

@@ -308,3 +308,18 @@ def editOrder(request):
         return Response({'message':'No Order Found'}, status = status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def upiOrder(request):
+    user = request.user
+    order_id = request.data['order_id']
+
+    # Check if order id is exist with the associated user
+    try:
+        order = Order.objects.get(_id = order_id)
+        order.status = "upi_unconfirmed"
+        order.save()
+        return Response({"message":"Order Successfully Updated"}, status=status.HTTP_200_OK)
+    except:
+        return Response({'message':'No Order Found'}, status = status.HTTP_400_BAD_REQUEST)
+
