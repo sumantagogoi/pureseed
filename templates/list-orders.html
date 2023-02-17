@@ -57,6 +57,7 @@
       <th>Order ID</th>
       <th>Date</th>
       <th>Customer</th>
+      <th>Phone</th>
       <th>Address</th>
       <th>Status</th>
       <th>Total Price</th>
@@ -70,6 +71,7 @@
       <td>{{ item|pk }}</td>
       <td>{{ item.created_at }}</td>
       <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
+      <td>{{ item.shippingaddress.phone_number }}</td>
       <td>{{ item.shippingaddress.address }}</td>
       <td>{{ item.status }}</td>
       <td>{{ item.totalPrice }}</td>
