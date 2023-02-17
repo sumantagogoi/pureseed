@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import getAllProducts, getSingleProduct,getAllCategories,MyTokenObtainpairView,registerUser,createOrder, F
-orgotPasswordView, ChangeForgotPassword,ValidateCoupon, getAllOrdersByUser, getSingleOrderByUser, updatePassword, updateUserDetails, getProfile,editOrder,
+from .views import getAllProducts, getSingleProduct,getAllCategories,MyTokenObtainpairView,registerUser,createOrder, 
+ForgotPasswordView, ChangeForgotPassword,ValidateCoupon, getAllOrdersByUser, getSingleOrderByUser, updatePassword, updateUserDetails, getProfile,editOrder,
 upiOrder
 
 
