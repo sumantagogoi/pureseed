@@ -16,7 +16,7 @@ def index(request):
 
     username = request.user.username
 
-    data = Order.objects.all().select_related('shippingaddress')
+    data = Order.objects.filter(status="order_confirmed").select_related('shippingaddress')
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
