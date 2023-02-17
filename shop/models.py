@@ -11,6 +11,7 @@ import datetime
 # Create your models here.
 
 STATUS = (
+    ('upi_uconfirmed', 'UPI Unconfirmed'),
     ('order_confirmed', 'Order Confirmed'),
     ('processing', 'Processing'),
     ('dispatched', 'Dispatched'),
