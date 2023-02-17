@@ -138,11 +138,11 @@ class Coupons(models.Model):
         return self.code
 
 class PinCode(models.Model):
-    pincode = models.CharField(max_length=6)
+    pincode = models.CharField(max_length=6, unique=True)
     servicibility = models.BooleanField(default=True)
-    place = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    notes = models.CharField(max_length=100)
+    place = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    notes = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.pincode
