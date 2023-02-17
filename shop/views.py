@@ -16,7 +16,7 @@ def index(request):
 
     username = request.user.username
 
-    data = Order.objects.all().prefetch_related('shippingaddress_set')
+    data = Order.objects.all().select_related('shippingaddress_set')
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
