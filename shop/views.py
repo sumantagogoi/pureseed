@@ -71,5 +71,5 @@ def confirmUPI(request):
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
-    return render(request, 'list-orders.html', context)
+    return render(request, 'list-upi.html', context)
 
