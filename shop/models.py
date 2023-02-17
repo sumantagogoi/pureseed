@@ -136,3 +136,8 @@ class Coupons(models.Model):
 
     def __str__(self):
         return self.code
+
+class PinCode(models.Model):
+    pincode = models.CharField(max_length=6)
+    servicibility = models.BooleanField(default=True)
+    notes = models.CharField(max_length=100)
