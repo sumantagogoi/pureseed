@@ -65,17 +65,17 @@
   </thead>
   <tbody>
     {% for item in data %}
-    {% for shipping_address in order.shippingaddress_set.all %}
+
     <tr>
       <td>{{ item|pk }}</td>
       <td>{{ item.created_at }}</td>
       <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
-      <td>{{ shipping_address.address }}</td>
+      <td>{{ item.shippingaddress.address }}</td>
       <td>{{ item.status }}</td>
       <td>{{ item.totalPrice }}</td>
       <td>{{ item.isDelivered }}</td>
     </tr>
-    {% endfor %}
+
     {% endfor %}
   </tbody>
 </table>
