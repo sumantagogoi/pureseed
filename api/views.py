@@ -317,7 +317,7 @@ def upiOrder(request):
     # Check if order id is exist with the associated user
     try:
         order = Order.objects.get(_id = order_id)
-        order.status = "upi_unconfirmed"
+        order.status = "UPI Unconfirmed"
         order.save()
         return Response({"message":"Order Successfully Updated"}, status=status.HTTP_200_OK)
     except:
