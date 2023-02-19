@@ -18,7 +18,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
-from shop.models import Product, Category, Order, OrderItem, ShippingAddress, Coupons
+from shop.models import Product, Category, Order, OrderItem, ShippingAddress, Coupons, PinCode
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 import random, string
@@ -323,3 +323,10 @@ def upiOrder(request):
     except:
         return Response({'message':'No Order Found'}, status = status.HTTP_400_BAD_REQUEST)
 
+
+        
+
+class CheckPincode(APIView):
+    def get(self, request, pincode):
+        exists = PinCode.objects.filter(pincode=pincode).exists()
+        return Response({'exists': exists})
