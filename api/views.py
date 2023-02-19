@@ -333,4 +333,4 @@ class CheckPincode(APIView):
             serializer = PinCodeSerializer(queryset.first())
             return Response(serializer.data)
         else:
-            return Response({'message': 'Pincode not found'}, status=404)
+            return Response({'servicibility': False, 'state':'unknown'}, status=404)
