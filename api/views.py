@@ -326,7 +326,7 @@ def upiOrder(request):
 
         
 
-class CheckPinCode(APIView):
+class CheckPincode(APIView):
     def get(self, request, pincode):
         queryset = PinCode.objects.filter(pincode=pincode)
         if queryset.exists():
