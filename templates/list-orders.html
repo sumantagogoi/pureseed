@@ -61,7 +61,7 @@
       <th>Address</th>
       <th>Status</th>
       <th>Total Price</th>
-      <th>Delivered</th>
+      <th>Delivery Info</th>
     </tr>
   </thead>
   <tbody>
@@ -75,7 +75,7 @@
       <td>{{ item.shippingaddress.address }},<br> {{ item.shippingaddress.city }}, {{ item.shippingaddress.state }}</td>
       <td>{{ item.status }}</td>
       <td>{{ item.totalPrice }}</td>
-      <td>{{ item.isDelivered }}</td>
+      <td>{{ item.courierInfo }}{% if item.isDelivered %}<br>Delivered{% endif %} </td>
     </tr>
 
     {% endfor %}

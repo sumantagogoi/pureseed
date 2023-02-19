@@ -187,7 +187,7 @@ class ForgotPasswordView(APIView):
             subject='Password Reset Link',
             message=message,
             recipient_list=[email],
-            from_email= 'nehatkhan82@gmail.com',
+            from_email= 'manxho@xynocast.com',
         )
         return Response({'message':'Reset Link Send Successfully'}, status=status.HTTP_200_OK)
 

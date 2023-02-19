@@ -71,6 +71,7 @@ class Order(models.Model):
     status = models.CharField(max_length=50, choices=STATUS, blank=True, null=True)
     isPaid = models.BooleanField(default=False)
     isDelivered = models.BooleanField(default=False)
+    courierInfo = models.CharField(max_length=300, blank=True, null=True)
     transactionId = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.datetime.now)
 
@@ -88,7 +89,11 @@ class Order(models.Model):
         else:
             last_custom_id = 0
         self.custom_order_id = 'WEB-{:05}'.format(last_custom_id + 1)
-        print(f'custom_id: {self.custom_order_id}')
+        #print(f'custom_id: {self.custom_order_id}')
+        
+        if self.status == 'delivered':
+            self.isDelivered = True
+        
         super().save(*args, **kwargs)
 
 
