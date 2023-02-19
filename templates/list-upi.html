@@ -30,7 +30,37 @@
     }
 
     function showmodal(){
-      $("#myModal").modal('show');
+      $.ajax({
+      type: "GET",
+      url: "https://api.manxho.co.in/api/users/order/138/",
+      dataType: "json",
+      success: function(data) {
+        // Create table headers
+        var table = "<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Order ID</th><th>Order Items</th><th>Price</th><th>Delivery Price</th><th>Total Price</th></tr></thead>";
+        // Get user info
+        var user = data.user;
+        var name = user.first_name + " " + user.last_name;
+        var phone = data.shippingAddress.phone_number;
+        var email = user.email;
+        // Get order info
+        var orderId = data.custom_order_id;
+        var orderItems = data.orderItems;
+        var price = data.totalPrice;
+        var deliveryPrice = data.shippingPrice;
+        var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+        // Create table rows
+        var row = "<tr><td>" + name + "</td><td>" + phone + "</td><td>" + email + "</td><td>" + orderId + "</td><td>";
+        for (var i = 0; i < orderItems.length; i++) {
+          row += orderItems[i].name + " - $" + orderItems[i].price + "<br>";
+        }
+        row += "</td><td>" + price + "</td><td>" + deliveryPrice + "</td><td>" + totalPrice + "</td></tr>";
+        // Add rows to table
+        table += row + "</table>";
+        // Display table in modal
+        $("#order-modal-body").html(table);
+        $("#order-modal").modal("show");
+      }
+    });
     }
 
   $(document).ready(function() {
@@ -44,6 +74,8 @@
       ],
     });
   });
+
+
 </script>
 
 {% endblock %}
@@ -91,7 +123,7 @@
 
 
   <!-- The Modal -->
-  <div class="modal" id="myModal">
+  <div class="modal" id="order-modal">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -104,9 +136,9 @@
         <!-- Modal body -->
         <div>
           <form id="form2" method="post">
-            <table class="modal-body">
+            <div id="order-modal-body">
 
-            </table>
+            </div>
           </form>
 
           <button type="button" class="btn btn-info rightp" onclick=submitform()>Submit</button>
