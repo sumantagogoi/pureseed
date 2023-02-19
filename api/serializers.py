@@ -4,7 +4,7 @@ from xml.parsers.expat import model
 
 
 from rest_framework import serializers
-from shop.models import Product, Category, OrderItem, ShippingAddress,Order, Coupons
+from shop.models import Product, Category, OrderItem, ShippingAddress,Order, Coupons, PinCode
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -97,3 +97,9 @@ class CouponsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coupons
         fields = ['id', 'discount', 'is_active', 'code', 'discount_type', 'max_limit']
+
+
+class PinCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PinCode
+        fields = '__all__'

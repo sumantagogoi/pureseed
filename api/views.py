@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 # from backend.manxho.shop.models import OrderItem
 
 
-from .serializers import CategorySerializer, CouponsSerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer
+from .serializers import CategorySerializer, CouponsSerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer, PinCodeSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -326,7 +326,11 @@ def upiOrder(request):
 
         
 
-class CheckPincode(APIView):
+class CheckPinCode(APIView):
     def get(self, request, pincode):
-        exists = PinCode.objects.filter(pincode=pincode).exists()
-        return Response({'exists': exists})
+        queryset = PinCode.objects.filter(pincode=pincode)
+        if queryset.exists():
+            serializer = PinCodeSerializer(queryset.first())
+            return Response(serializer.data)
+        else:
+            return Response({'message': 'Pincode not found'}, status=404)
