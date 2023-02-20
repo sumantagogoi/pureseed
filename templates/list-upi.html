@@ -61,7 +61,7 @@
         row += "</td></tr><tr><td>Item Price: </td><td> Rs. " + price + "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> Rs. " + totalPrice + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
-        table += "<br>Transaction ID: <input type='text' id='txid' value='' /> <input type='hidden' id='oid' value='" + orderId + `'/>  <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
+        table += "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/>  <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
         // Display table in modal
         $("#order-modal-body").html(table);
         $("#order-modal").modal("show");
@@ -69,25 +69,27 @@
     });
   }
 
- 
+
   function submitform(id) {
-    $.ajax({
-      type: "POST",
-      url: 'https://dashboard.manxho.co.in/api/edit_order/',
-      headers: {
-        "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
-      },
-      data: {
-        "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
-        "transactionId": $('#txid').val(),
-        "order_id": id
-      },
-      dataType: "json",
-      success: function (data) {
-        //$('#form2').submit();
-        console.log(data)
-      }
-    });
+    if ($('#txid').val().length > 4) {
+      $.ajax({
+        type: "POST",
+        url: 'https://dashboard.manxho.co.in/api/edit_order/',
+        headers: {
+          "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
+        },
+        data: {
+          "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
+          "transactionId": $('#txid').val(),
+          "order_id": id
+        },
+        dataType: "json",
+        success: function (data) {
+          //$('#form2').submit();
+          console.log(data)
+        }
+      });
+    }
   }
 
 
@@ -172,11 +174,11 @@
         <form id="form2" method="post">
           {% csrf_token %}
           <div id="order-modal-body">
-            
+
 
           </div>
         </form>
-       
+
       </div>
 
     </div>
