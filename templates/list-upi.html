@@ -75,13 +75,11 @@
       type: "POST",
       url: `https://dashboard.manxho.co.in/api/edit_order/`,
       xhrFields: {
-        withCredentials: true,
-        
+        withCredentials: true,        
       },
-      headers: {
-        'csrfmiddlewaretoken': csrftoken
-      },
+
       data: {
+        'csrfmiddlewaretoken': csrftoken,
        "transactionId": $('#txid').val(),
        "order_id": $('#oid').val(),
       },
