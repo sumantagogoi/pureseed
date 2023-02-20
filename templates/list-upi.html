@@ -56,7 +56,7 @@
         var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " + 
           phone + "</td></tr><tr><td>Email: </td><td> " + email + "</td></tr><tr><td>OrderId: </td><td> " + orderId + "</td></tr>";
         for (var i = 0; i < orderItems.length; i++) {
-          "<tr><td>" + row += orderItems[i].name + " </td><td>  Rs. " + orderItems[i].price + "</td></tr>";
+          row += " <tr><td>"+  orderItems[i].name + " </td><td>  Rs. " + orderItems[i].price + "</td></tr>";
         }
         row += "</td></tr><tr><td>Item Price: </td><td> " + price + "</td></tr><tr><td>Delivery Price: </td><td> " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> " + totalPrice + "</td></tr>";
         // Add rows to table
