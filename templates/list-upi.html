@@ -69,7 +69,7 @@
     });
   }
 
-  var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+ 
   function submitform(id) {
     $.ajax({
       type: "POST",
@@ -78,7 +78,7 @@
         "X-CSRFToken": csrftoken
       },
       data: {
-        "csrfmiddlewaretoken": csrftoken,
+        "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
         "transactionId": $('#txid').val(),
         "order_id": id
       },
