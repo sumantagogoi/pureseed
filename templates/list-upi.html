@@ -33,38 +33,36 @@
     $.ajax({
       type: "GET",
       url: "https://api.manxho.co.in/api/users/order/138/",
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Cookie': document.cookie
-      },
-      dataType: "json",
-      success: function (data) {
-        // Create table headers
-        var table = "<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Order ID</th><th>Order Items</th><th>Price</th><th>Delivery Price</th><th>Total Price</th></tr></thead>";
-        // Get user info
-        var user = data.user;
-        var name = user.first_name + " " + user.last_name;
-        var phone = data.shippingAddress.phone_number;
-        var email = user.email;
-        // Get order info
-        var orderId = data.custom_order_id;
-        var orderItems = data.orderItems;
-        var price = data.totalPrice;
-        var deliveryPrice = data.shippingPrice;
-        var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
-        // Create table rows
-        var row = "<tr><td>" + name + "</td><td>" + phone + "</td><td>" + email + "</td><td>" + orderId + "</td><td>";
-        for (var i = 0; i < orderItems.length; i++) {
-          row += orderItems[i].name + " - $" + orderItems[i].price + "<br>";
-        }
-        row += "</td><td>" + price + "</td><td>" + deliveryPrice + "</td><td>" + totalPrice + "</td></tr>";
-        // Add rows to table
-        table += row + "</table>";
-        // Display table in modal
-        $("#order-modal-body").html(table);
-        $("#order-modal").modal("show");
+      xhrFields: {
+        withCredentials: true # <----
       }
+  dataType: "json",
+    success: function (data) {
+      // Create table headers
+      var table = "<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Order ID</th><th>Order Items</th><th>Price</th><th>Delivery Price</th><th>Total Price</th></tr></thead>";
+      // Get user info
+      var user = data.user;
+      var name = user.first_name + " " + user.last_name;
+      var phone = data.shippingAddress.phone_number;
+      var email = user.email;
+      // Get order info
+      var orderId = data.custom_order_id;
+      var orderItems = data.orderItems;
+      var price = data.totalPrice;
+      var deliveryPrice = data.shippingPrice;
+      var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+      // Create table rows
+      var row = "<tr><td>" + name + "</td><td>" + phone + "</td><td>" + email + "</td><td>" + orderId + "</td><td>";
+      for (var i = 0; i < orderItems.length; i++) {
+        row += orderItems[i].name + " - $" + orderItems[i].price + "<br>";
+      }
+      row += "</td><td>" + price + "</td><td>" + deliveryPrice + "</td><td>" + totalPrice + "</td></tr>";
+      // Add rows to table
+      table += row + "</table>";
+      // Display table in modal
+      $("#order-modal-body").html(table);
+      $("#order-modal").modal("show");
+    }
     });
   }
 
