@@ -42,12 +42,12 @@
         // Add rows to table
         table += row + "</table>";
         // Display table in modal
+        
         $("#order-modal-body").html(table);
         $("#order-modal").modal("show");
       }
     });
   }
-
 
 
   function deleteOrder(billid) {
@@ -150,11 +150,12 @@
       <div>
         <form id="form2" method="post">
           <div id="order-modal-body">
+            {% csrf_token %}
 
           </div>
         </form>
 
-        <button type="button" class="btn btn-info rightp" onclick=submitform()>Submit</button>
+        <button type="button" class="btn btn-info rightp" onclick=submitform()>Confirm Payment</button>
       </div>
 
     </div>
