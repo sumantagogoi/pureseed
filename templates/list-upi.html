@@ -61,7 +61,7 @@
         row += "</td></tr><tr><td>Item Price: </td><td> Rs. " + price + "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> Rs. " + totalPrice + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
-        table += "<br>Transaction ID: <input type='text' id='txid' value='' /> <input type='hidden' id='oid' value='" + orderId + "'/>";
+        table += "<br>Transaction ID: <input type='text' id='txid' value='' /> <input type='hidden' id='oid' value='" + orderId + `'/>  <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
         // Display table in modal
         $("#order-modal-body").html(table);
         $("#order-modal").modal("show");
@@ -178,8 +178,7 @@
 
           </div>
         </form>
-
-        <button type="button" class="btn btn-info rightp" onclick=submitform({{ item|pk }})>Confirm Payment</button>
+       
       </div>
 
     </div>
