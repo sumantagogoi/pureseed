@@ -302,6 +302,7 @@ def editOrder(request):
         order = Order.objects.get(_id = order_id)
         order.transactionId = transactionId
         order.isPaid = True
+        order.status = "order_confirmed"
         order.save()
         return Response({"message":"Order Successfully Updated"}, status=status.HTTP_200_OK)
     except:
