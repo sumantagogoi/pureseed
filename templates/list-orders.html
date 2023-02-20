@@ -39,6 +39,45 @@
         [0, 'desc']
       ],
     });
+
+    function showmodal(id) {
+    $.ajax({
+      type: "GET",
+      url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
+      xhrFields: {
+        withCredentials: true
+      },
+      dataType: "json",
+      success: function (data) {
+        // Create table headers
+        var table = "<table>";
+        // Get user info
+        var user = data.user;
+        var name = user.first_name + " " + user.last_name;
+        var phone = data.shippingAddress.phone_number;
+        var email = user.email;
+        // Get order info
+        var orderId = data.custom_order_id;
+        var orderItems = data.orderItems;
+        var price = data.totalPrice;
+        var deliveryPrice = data.shippingPrice;
+        var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+        // Create table rows
+        var row = "<tr><td>Name:" + name + "</td></tr><tr><td>Phone: " + 
+          phone + "</td></tr><tr><td>Email: " + email + "</td></tr><tr><td>OrderId: " + orderId + "</td></tr><tr><td>";
+        for (var i = 0; i < orderItems.length; i++) {
+          row += orderItems[i].name + " - Rs. " + orderItems[i].price + "<br>";
+        }
+        row += "</td></tr><tr><td>Item Price: " + price + "</td></tr><tr><td>Delivery Price: " + deliveryPrice + "</td></tr><tr><td>Total Price: " + totalPrice + "</td></tr>";
+        // Add rows to table
+        table += row + "</table>";
+        // Display table in modal
+        $("#order-modal-body").html(table);
+        $("#order-modal").modal("show");
+      }
+    });
+  }
+
   });
 </script>
 
@@ -68,7 +107,7 @@
     {% for item in data %}
 
     <tr>
-      <td>{{ item|pk }}</td>
+      <td onclick="showmodal({{ item|pk }})">{{ item|pk }}</td>
       <td>{{ item.created_at }}</td>
       <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
       <td>{{ item.shippingaddress.phone_number }}</td>
@@ -82,5 +121,31 @@
   </tbody>
 </table>
 
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="order-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Info</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div>
+        <form id="form2" method="post">
+          <div id="order-modal-body">
+
+          </div>
+        </form>
+
+        <button type="button" class="btn btn-info rightp" onclick=submitform()>Submit</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 {% endblock %}
