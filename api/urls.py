@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import getAllProducts, getSingleProduct,getAllCategories,MyTokenObtainpairView,registerUser,createOrder, \
     ForgotPasswordView, ChangeForgotPassword,ValidateCoupon, getAllOrdersByUser, getSingleOrderByUser, \
-        updatePassword, updateUserDetails, getProfile,editOrder, upiOrder, CheckPincode
+        updatePassword, updateUserDetails, getProfile,editOrder, upiOrder, CheckPincode, editOrderStatus
 
 
 urlpatterns =[
@@ -10,6 +10,7 @@ urlpatterns =[
     path('categories/', getAllCategories),
     path('create_order/',createOrder),
     path('edit_order/',editOrder),
+    path('edit_order_status/', editOrderStatus),
     path('upi_order/', upiOrder),
     path('validate_coupon/', ValidateCoupon.as_view()),   
     path('check_pincode/<str:pincode>/', CheckPincode.as_view(), name='check_pincode'),

@@ -335,3 +335,22 @@ class CheckPincode(APIView):
             return Response(serializer.data)
         else:
             return Response({'servicibility': False, 'state':'unknown'}, status=404)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def editOrderStatus(request):
+    user = request.user
+    order_id = request.data['order_id']
+    new_status = request.data['new_status']
+    
+    # Check if order id is exist with the associated user
+    try:
+        order = Order.objects.get(_id = order_id)
+        order.status = new_status
+        if new_status == "dispatched":
+            order.courierInfo = request.data['courier-info']
+        order.save()
+        return Response({"message":"Order Successfully Updated"}, status=status.HTTP_200_OK)
+    except:
+        return Response({'message':'No Order Found'}, status = status.HTTP_400_BAD_REQUEST)

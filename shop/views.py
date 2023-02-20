@@ -16,9 +16,9 @@ def index(request):
 
     username = request.user.username
 
-    data = Order.objects.filter(status="order_confirmed").select_related('shippingaddress')
+    data = Order.objects.filter(Q(status="order_confirmed") | Q(status="dispatched") | Q(status="processing")).select_related('shippingaddress')
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Confirmed"}
 
     return render(request, 'list-orders.html', context)
 
@@ -73,3 +73,27 @@ def confirmUPI(request):
 
     return render(request, 'list-upi.html', context)
 
+
+def cancelledOrders(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+    username = request.user.username
+
+    data = Order.objects.filter(status="cancelled").select_related('shippingaddress')
+
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Cancelled"}
+
+    return render(request, 'list-orders.html', context)
+
+def completedOrders(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+    username = request.user.username
+
+    data = Order.objects.filter(status="completed").select_related('shippingaddress')
+
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Completed"}
+
+    return render(request, 'list-orders.html', context)
