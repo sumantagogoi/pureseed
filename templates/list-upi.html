@@ -172,8 +172,9 @@
       <!-- Modal body -->
       <div>
         <form id="form2" method="post">
+          {% csrf_token %}
           <div id="order-modal-body">
-            {% csrf_token %}
+            
 
           </div>
         </form>
