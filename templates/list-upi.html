@@ -39,7 +39,7 @@
       dataType: "json",
       success: function (data) {
         // Create table headers
-        var table = "<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Order ID</th><th>Order Items</th><th>Price</th><th>Delivery Price</th><th>Total Price</th></tr></thead>";
+        var table = "<table>";
         // Get user info
         var user = data.user;
         var name = user.first_name + " " + user.last_name;
@@ -52,7 +52,8 @@
         var deliveryPrice = data.shippingPrice;
         var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
         // Create table rows
-        var row = "<tr><td>" + name + "</td><td>" + phone + "</td><td>" + email + "</td><td>" + orderId + "</td><td>";
+        var row = "<tr><td>Name:" + name + "</td></tr><tr><td>Phone: " + 
+          phone + "</td></tr><tr><td>Email:" + email + "</td></tr><tr><td>OrderId" + orderId + "</td></tr><tr><td>";
         for (var i = 0; i < orderItems.length; i++) {
           row += orderItems[i].name + " - $" + orderItems[i].price + "<br>";
         }
