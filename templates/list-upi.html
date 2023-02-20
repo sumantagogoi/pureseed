@@ -76,6 +76,9 @@
       url: `https://dashboard.manxho.co.in/api/edit_order/`,
       xhrFields: {
         withCredentials: true,
+        
+      },
+      headers: {
         "X-CSRFToken": csrftoken
       },
       data: {
@@ -170,6 +173,7 @@
       <div>
         <form id="form2" method="post">
           <div id="order-modal-body">
+            {% csrf_token %}
 
           </div>
         </form>
