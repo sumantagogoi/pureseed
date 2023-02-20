@@ -69,13 +69,14 @@
     });
   }
 
-
+  var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
   function submitform() {
     $.ajax({
       type: "POST",
       url: `https://dashboard.manxho.co.in/api/edit_order/`,
       xhrFields: {
-        withCredentials: true
+        withCredentials: true,
+        "X-CSRFToken": csrftoken
       },
       data: {
        "transactionId": $('#txid').val(),
@@ -173,7 +174,7 @@
           </div>
         </form>
 
-        <button type="button" class="btn btn-info rightp" onclick=submitform()>Submit</button>
+        <button type="button" class="btn btn-info rightp" onclick=submitform()>Confirm Payment</button>
       </div>
 
     </div>
