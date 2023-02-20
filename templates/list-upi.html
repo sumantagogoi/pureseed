@@ -29,10 +29,10 @@
     }
   }
 
-  function showmodal() {
+  function showmodal(id) {
     $.ajax({
       type: "GET",
-      url: "https://dashboard.manxho.co.in/api/users/order/138/",
+      url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
       xhrFields: {
         withCredentials: true
       },
@@ -115,7 +115,7 @@
         <td>UPI Unconfirmed</td>
         <td>{{ item.totalPrice }}</td>
         <td>
-          <button class="btn btn-primary" onclick="showmodal()">Confirm Payment</button>
+          <button class="btn btn-primary" onclick="showmodal({{ item|pk }})">Confirm Payment</button>
         </td>
       </tr>
 
