@@ -107,7 +107,7 @@
     {% for item in data %}
 
     <tr>
-      <td onclick="showmodal({{ item|pk }})">{{ item|pk }}</td>
+      <td onclick=showmodal({{ item|pk }}) style="color: blue">{{ item|pk }}</td>
       <td>{{ item.created_at }}</td>
       <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
       <td>{{ item.shippingaddress.phone_number }}</td>
