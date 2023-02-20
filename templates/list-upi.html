@@ -75,17 +75,19 @@
       type: "POST",
       url: `https://dashboard.manxho.co.in/api/edit_order/`,
       xhrFields: {
-        withCredentials: true,        
+        withCredentials: true,
       },
-
+      headers: {
+        "X-CSRFToken": csrftoken
+      },
       data: {
-        'csrfmiddlewaretoken': csrftoken,
-       "transactionId": $('#txid').val(),
-       "order_id": $('#oid').val(),
+        "csrfmiddlewaretoken": csrftoken,
+        "transactionId": $('#txid').val(),
+        "order_id": $('#oid').val(),
       },
       dataType: "json",
       success: function (data) {
-          $('#form2').submit();
+        $('#form2').submit();
       }
     });
   }
@@ -94,15 +96,15 @@
 
   $(document).ready(function () {
 
-        $.fn.dataTable.moment('MMM DD, YYYY');
-        $('#tblx').DataTable({
-          'iDisplayLength': 500,
-          "lengthMenu": [10, 25, 50, 75, 100, 500, 1000],
-          'order': [
-            [0, 'desc']
-          ],
-        });
-      });
+    $.fn.dataTable.moment('MMM DD, YYYY');
+    $('#tblx').DataTable({
+      'iDisplayLength': 500,
+      "lengthMenu": [10, 25, 50, 75, 100, 500, 1000],
+      'order': [
+        [0, 'desc']
+      ],
+    });
+  });
 
 </script>
 
