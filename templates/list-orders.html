@@ -9,6 +9,8 @@
 
 <script type="text/javascript">
 
+  var currid = "";
+
   function showmodal(id) {
     $.ajax({
       type: "GET",
@@ -31,6 +33,7 @@
         var price = data.totalPrice;
         var deliveryPrice = data.shippingPrice;
         var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+        currid = id;
         $("#ostatus").val(data.status);
         // Create table rows
         var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " +
@@ -48,6 +51,46 @@
         $("#order-modal").modal("show");
       }
     });
+  }
+
+  function submitform(){
+    if ($("#ostatus").val != "dispatched"){
+      $.ajax({
+        type: "POST",
+        url: 'https://dashboard.manxho.co.in/api/edit_order_status/',
+        headers: {
+          "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
+        },
+        data: {
+          "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
+          "status": $('#ostatus').val(),
+          "order_id": currid
+        },
+        dataType: "json",
+        success: function (data) {
+          //$('#form2').submit();
+          console.log(data)
+      });
+    }
+    else {
+      $.ajax({
+        type: "POST",
+        url: 'https://dashboard.manxho.co.in/api/edit_order_status/',
+        headers: {
+          "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
+        },
+        data: {
+          "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
+          "new-status": $('#ostatus').val(),
+          "courier-info": $("courier-data").val(),
+          "order_id": currid
+        },
+        dataType: "json",
+        success: function (data) {
+         // $('#form2').submit();
+         console.log(data)
+      });
+    }
   }
 
 
@@ -143,8 +186,9 @@
       <!-- Modal body -->
       <div>
         <form id="form2" method="post">
+          {% csrf_token %}
           <div id="order-modal-body">
-            {% csrf_token %}
+            
 
           </div>
         </form>
