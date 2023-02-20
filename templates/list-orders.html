@@ -32,12 +32,12 @@ function showmodal(id) {
         var deliveryPrice = data.shippingPrice;
         var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
         // Create table rows
-        var row = "<tr><td>Name:" + name + "</td></tr><tr><td>Phone: " + 
-          phone + "</td></tr><tr><td>Email: " + email + "</td></tr><tr><td>OrderId: " + orderId + "</td></tr><tr><td>";
+        var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " + 
+          phone + "</td></tr><tr><td>Email: </td><td> " + email + "</td></tr><tr><td>OrderId: </td><td> " + orderId + "</td></tr><tr><td>";
         for (var i = 0; i < orderItems.length; i++) {
-          row += orderItems[i].name + " - Rs. " + orderItems[i].price + "<br>";
+          row += orderItems[i].name + " </td><td>  Rs. " + orderItems[i].price + "</td></tr>";
         }
-        row += "</td></tr><tr><td>Item Price: " + price + "</td></tr><tr><td>Delivery Price: " + deliveryPrice + "</td></tr><tr><td>Total Price: " + totalPrice + "</td></tr>";
+        row += "</td></tr><tr><td>Item Price: </td><td> " + price + "</td></tr><tr><td>Delivery Price: </td><td> " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> " + totalPrice + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
         // Display table in modal
