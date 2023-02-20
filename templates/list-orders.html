@@ -9,38 +9,7 @@
 
 <script type="text/javascript">
 
-
-  function deleteOrder(billid){
-    var result = confirm("Are you sure you want to delete Bill #"+billid+"?");
-
-    if (result) {
-        stuff = {
-          'status':'Bill Cancelled',
-          'csrfmiddlewaretoken': '{{ csrf_token }}'
-        }
-        $.ajax({
-          type: "POST",
-          url: "/cash-invoice/bill/"+billid+"/",
-          data: stuff,
-          success: function(data) {
-            location.reload();
-          }
-        });
-      }
-    }
-
-  $(document).ready(function() {
-
-    $.fn.dataTable.moment('MMM DD, YYYY');
-    $('#tblx').DataTable({
-      'iDisplayLength': 500,
-      "lengthMenu": [10, 25, 50, 75, 100, 500, 1000],
-      'order': [
-        [0, 'desc']
-      ],
-    });
-
-    function showmodal(id) {
+function showmodal(id) {
     $.ajax({
       type: "GET",
       url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
@@ -78,6 +47,39 @@
     });
   }
 
+
+
+  function deleteOrder(billid){
+    var result = confirm("Are you sure you want to delete Bill #"+billid+"?");
+
+    if (result) {
+        stuff = {
+          'status':'Bill Cancelled',
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        }
+        $.ajax({
+          type: "POST",
+          url: "/cash-invoice/bill/"+billid+"/",
+          data: stuff,
+          success: function(data) {
+            location.reload();
+          }
+        });
+      }
+    }
+
+  $(document).ready(function() {
+
+    $.fn.dataTable.moment('MMM DD, YYYY');
+    $('#tblx').DataTable({
+      'iDisplayLength': 500,
+      "lengthMenu": [10, 25, 50, 75, 100, 500, 1000],
+      'order': [
+        [0, 'desc']
+      ],
+    });
+
+   
   });
 </script>
 
