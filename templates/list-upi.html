@@ -70,7 +70,7 @@
   }
 
   var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-  function submitform() {
+  function submitform(id) {
     $.ajax({
       type: "POST",
       url: `https://dashboard.manxho.co.in/api/edit_order/`,
@@ -179,7 +179,7 @@
           </div>
         </form>
 
-        <button type="button" class="btn btn-info rightp" onclick=submitform()>Confirm Payment</button>
+        <button type="button" class="btn btn-info rightp" onclick=submitform({{ item|pk }})>Confirm Payment</button>
       </div>
 
     </div>
