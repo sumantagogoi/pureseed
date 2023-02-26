@@ -38,6 +38,7 @@ class Category(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to='uploads/')
     _id = models.AutoField(primary_key=True, editable=False)
     status = models.BooleanField(default=False, blank=True, null=True)
+    order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

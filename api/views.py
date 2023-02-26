@@ -52,7 +52,7 @@ def getSingleProduct(request, pk):
     
 @api_view(['GET'])
 def getAllCategories(request):
-     categories = Category.objects.all()
+     categories = Category.objects.all().order_by('-order')
      serializer = CategorySerializer(categories, many=True)
      return Response(serializer.data, status=status.HTTP_200_OK)
 
