@@ -53,6 +53,7 @@ class Product(models.Model):
     inStock = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True, upload_to='uploads/')
     create_at = models.DateTimeField(auto_now_add=True)
+    order = models.IntegerField(default=0)
     _id = models.AutoField(primary_key=True, editable=False)
 
 

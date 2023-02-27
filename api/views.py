@@ -40,7 +40,7 @@ from dj_rest_auth.registration.views import SocialLoginView
 
 @api_view(['GET'])
 def getAllProducts(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by("-order")
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
     
