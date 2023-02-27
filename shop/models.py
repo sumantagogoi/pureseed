@@ -57,7 +57,7 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return self.title+' - '+self.qty+' '+self.size
 
 
 class Order(models.Model):
