@@ -98,3 +98,15 @@ def completedOrders(request):
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Completed"}
 
     return render(request, 'list-orders.html', context)
+
+def editPin(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+    username = request.user.username
+
+    data = PinCode.objects.all()
+
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+
+    return render(request, 'list-pin.html', context)

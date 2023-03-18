@@ -1,0 +1,163 @@
+{% extends "base-xyno.html" %}
+{% block head2 %}
+{% load custom_tags %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+
+<script type="text/javascript">
+
+  function showmodal(id) {
+    $.ajax({
+      type: "GET",
+      url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
+      xhrFields: {
+        withCredentials: true
+      },
+      dataType: "json",
+      success: function (data) {
+        // Create table headers
+        var table = "<table>";
+        // Get user info
+        var user = data.user;
+        var name = user.first_name + " " + user.last_name;
+        var phone = data.shippingAddress.phone_number;
+        var email = user.email;
+        // Get order info
+        var orderId = data.custom_order_id;
+        var orderItems = data.orderItems;
+        var price = data.totalPrice;
+        var deliveryPrice = data.shippingPrice;
+        var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+        // Create table rows
+        var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " +
+          phone + "</td></tr><tr><td>Email: </td><td> " + email + "</td></tr><tr><td>OrderId: </td><td> " + orderId + "</td></tr>";
+        for (var i = 0; i < orderItems.length; i++) {
+          row += " <b><tr class='data'><td>" + orderItems[i].name + " </td><td>  Rs. " + orderItems[i].price + "</td></tr></b>";
+        }
+        row += "</td></tr><tr><td>Item Price: </td><td> Rs. " + price + "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> Rs. " + totalPrice + "</td></tr>";
+        // Add rows to table
+        table += row + "</table>";
+        table += "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
+        // Display table in modal
+        $("#order-modal-body").html(table);
+        $("#order-modal").modal("show");
+      }
+    });
+  }
+
+
+  function submitform(id) {
+    if ($('#txid').val().length > 4) {
+      $.ajax({
+        type: "POST",
+        url: 'https://dashboard.manxho.co.in,
+        headers: {
+          "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
+        },
+        data: {
+          "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
+          "transactionId": $('#txid').val(),
+          "order_id": id
+        },
+        dataType: "json",
+        success: function (data) {
+          $('#form2').submit();
+        }
+      });
+    }
+  }
+
+
+
+  $(document).ready(function () {
+
+    $.fn.dataTable.moment('MMM DD, YYYY');
+    $('#tblx').DataTable({
+      'iDisplayLength': 500,
+      "lengthMenu": [10, 25, 50, 75, 100, 500, 1000],
+      'order': [
+        [0, 'desc']
+      ],
+    });
+  });
+
+</script>
+
+<style>
+  .data,
+  .data td {
+    border: 1px solid #444;
+  }
+</style>
+{% endblock %}
+
+{% block maindiv %}
+
+<h2>
+  Pincodes:
+</h2>
+
+<div>
+  <table border="1" style="background-color: white;" id="tblx" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Pincode</th>
+        <th>Servicibility</th>
+        <th>Place</th>
+
+        <th>State</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in data %}
+
+      <tr>
+        <td>{{ item.pincode }}</td>
+        <td>{{ item.servicibility }}</td>
+        <td>{{ item.place }}</td>
+        <td>{{ item.state }}</td>
+        <td>{{ item.notes }}</td>
+        <td>
+          <button class="btn btn-primary" onclick="showmodal({{ item|pk }})">Edit</button>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="order-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update Order</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div>
+        <form id="form2" method="post">
+          {% csrf_token %}
+          <div id="order-modal-body">
+
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
