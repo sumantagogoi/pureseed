@@ -114,8 +114,16 @@ def editPin(request):
         if form.is_valid():
             form.save()
         else:
-            obj, created = PinCode.objects.get_or_create(**form.cleaned_data)
-            
+            obj, created = PinCode.objects.get_or_create(
+                pincode=form.cleaned_data["pincode"],
+                defaults={
+                    'servicibility': form.cleaned_data["servicibility"],
+                    'place': form.cleaned_data["place"],
+                    'state': form.cleaned_data["state"],
+                    'notes': form.cleaned_data["notes"],
+                }
+            )
+                
     form = PinCodeForm()
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'form': form}
