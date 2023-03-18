@@ -135,6 +135,6 @@ def editPin(request):
             
     form = PinCodeForm()
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'form': form}
 
     return render(request, 'list-pin.html', context)
