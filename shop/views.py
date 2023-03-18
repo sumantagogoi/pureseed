@@ -113,7 +113,7 @@ def editPin(request):
         
         if form.is_valid():
             pincode = form.cleaned_data['pincode']
-            servicibility = form.cleaned_data['servicibility']
+            servicibility = True if form.cleaned_data['servicibility'] == "on" else False
             place = form.cleaned_data['place']
             state = form.cleaned_data['state']
             notes = form.cleaned_data['notes']
