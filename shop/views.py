@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 from django.conf import settings
 from .models import *
+from .forms import PinCodeForm
 
 
 def index(request):
@@ -106,6 +107,33 @@ def editPin(request):
     username = request.user.username
 
     data = PinCode.objects.all()
+
+    if request.method == "POST":
+        form = PinCodeForm(request.POST)
+        
+        if form.is_valid():
+            pincode = form.cleaned_data['pincode']
+            servicibility = form.cleaned_data['servicibility']
+            place = form.cleaned_data['place']
+            state = form.cleaned_data['state']
+            notes = form.cleaned_data['notes']
+            obj, created = PinCode.objects.get_or_create(
+                pincode=pincode,
+                defaults={
+                    'servicibility': servicibility,
+                    'place': place,
+                    'state': state,
+                    'notes': notes,
+                }
+            )
+            if not created:
+                obj.servicibility = servicibility
+                obj.place = place
+                obj.state = state
+                obj.notes = notes
+                obj.save()
+            
+    form = PinCodeForm()
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
