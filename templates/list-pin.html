@@ -9,26 +9,26 @@
 <script type="text/javascript">
 
 
-  function deleteOrder(billid){
-    var result = confirm("Are you sure you want to delete Bill #"+billid+"?");
+  function deleteOrder(billid) {
+    var result = confirm("Are you sure you want to delete Bill #" + billid + "?");
 
     if (result) {
-        stuff = {
-          'status':'Bill Cancelled',
-          'csrfmiddlewaretoken': '{{ csrf_token }}'
-        }
-        $.ajax({
-          type: "POST",
-          url: "/cash-invoice/bill/"+billid+"/",
-          data: stuff,
-          success: function(data) {
-            location.reload();
-          }
-        });
+      stuff = {
+        'status': 'Bill Cancelled',
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
       }
+      $.ajax({
+        type: "POST",
+        url: "/cash-invoice/bill/" + billid + "/",
+        data: stuff,
+        success: function (data) {
+          location.reload();
+        }
+      });
     }
+  }
 
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     $.fn.dataTable.moment('MMM DD, YYYY');
     $('#tblx').DataTable({
@@ -38,6 +38,23 @@
         [0, 'desc']
       ],
     });
+
+    $('.edit-btn').click(function () {
+      // Get the values from the table row
+      var pincode = $(this).data('pincode');
+      var servicibility = $(this).closest('tr').find('td:eq(1)').text();
+      var place = $(this).closest('tr').find('td:eq(2)').text();
+      var state = $(this).closest('tr').find('td:eq(3)').text();
+      var notes = $(this).closest('tr').find('td:eq(4)').text();
+
+      // Set the values in the form fields
+      $('#id_pincode').val(pincode);
+      $('#id_servicibility').prop('checked', servicibility == 'True');
+      $('#id_place').val(place);
+      $('#id_state').val(state);
+      $('#id_notes').val(notes);
+    });
+
   });
 </script>
 
@@ -55,7 +72,7 @@
     <button type="submit" class="btn btn-secondary">Submit</button>
   </form>
 </div>
-<hr/>
+<hr />
 <div>
   <table border="1" style="background-color: white;" id="tblx" class="table table-striped table-bordered">
     <thead>
@@ -78,7 +95,8 @@
         <td>{{ item.state }}</td>
         <td>{{ item.notes }}</td>
         <td>
-          <button class="btn btn-primary" onclick="showmodal({{ item.id }})">Edit</button>
+          <button class=" edit-btn btn btn-primary" data-pincode="{{ item.pincode }}">Edit</button>
+        </td>
         </td>
       </tr>
 
