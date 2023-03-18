@@ -115,7 +115,7 @@ def editPin(request):
             form.save()
         else:
             if PinCode.objects.filter(pincode=request.POST.get("pincode")).exists():
-                obj = PinCode.objects.get(pincode=form.cleaned_data["pincode"])
+                obj = PinCode.objects.get(pincode=request.POST.get("pincode"))
                 obj.servicibility = form.cleaned_data["servicibility"]
                 obj.place = form.cleaned_data["place"]
                 obj.state = form.cleaned_data["state"]
