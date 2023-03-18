@@ -112,29 +112,9 @@ def editPin(request):
         form = PinCodeForm(request.POST)
         
         if form.is_valid():
-            pincode = form.cleaned_data['pincode']
-            servicibility = True if form.cleaned_data['servicibility'] == "on" else False
-            place = form.cleaned_data['place']
-            state = form.cleaned_data['state']
-            notes = form.cleaned_data['notes']
-            obj, created = PinCode.objects.get_or_create(
-                pincode=pincode,
-                defaults={
-                    'servicibility': servicibility,
-                    'place': place,
-                    'state': state,
-                    'notes': notes,
-                }
-            )
-            if not created:
-                obj.servicibility = servicibility
-                obj.place = place
-                obj.state = state
-                obj.notes = notes
-                obj.save()
-            return HttpResponse(request.POST["servicibility"], status=200)
+            form.save()
         else:
-            return HttpResponse(form.errors.values())
+            obj, created = PinCode.objects.get_or_create(**form.cleaned_data)
             
     form = PinCodeForm()
 
