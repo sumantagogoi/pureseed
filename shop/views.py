@@ -134,7 +134,7 @@ def editPin(request):
                 obj.save()
             return HttpResponse(request.POST["servicibility"], status=200)
         else:
-            return HttpResponse(form.errors, status=500)
+            print (form.errors)
             
     form = PinCodeForm()
 
