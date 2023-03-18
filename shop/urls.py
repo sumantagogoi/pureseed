@@ -10,4 +10,5 @@ path('manage-items/', views.items),
 path('confirm-upi/', views.confirmUPI),
 path('cancelled-orders/', views.cancelledOrders),
 path('completed-orders/', views.completedOrders),
+path('pincodes/', views.editPin),
 ]
