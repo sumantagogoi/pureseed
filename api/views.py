@@ -270,7 +270,7 @@ class ValidateCoupon(APIView):
 @permission_classes([IsAuthenticated])
 def getAllOrdersByUser(request):
     user = request.user
-    order = user.order_set.all()
+    order = user.order_set.filter(status__isnull = False)
     serializer = OrderSerializer(order, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
