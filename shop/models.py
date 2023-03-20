@@ -23,7 +23,7 @@ STATUS = (
 
 
 SIZE = (
-    ('kg', 'KG'),
+    #('kg', 'KG'),
     ('gram', 'Grams')
 )
 
