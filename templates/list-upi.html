@@ -29,15 +29,14 @@
         var orderId = data.custom_order_id;
         var orderItems = data.orderItems;
         var price = data.totalPrice;
-        var deliveryPrice = data.shippingPrice;
-        var totalPrice = parseFloat(price) + parseFloat(deliveryPrice);
+        var deliveryPrice = data.shippingPrice; 
         // Create table rows
         var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " +
           phone + "</td></tr><tr><td>Email: </td><td> " + email + "</td></tr><tr><td>OrderId: </td><td> " + orderId + "</td></tr>";
         for (var i = 0; i < orderItems.length; i++) {
           row += " <b><tr class='data'><td>" + orderItems[i].name + " </td><td>  Rs. " + orderItems[i].price + "</td></tr></b>";
         }
-        row += "</td></tr><tr><td>Item Price: </td><td> Rs. " + price + "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Total Price: </td><td> Rs. " + totalPrice + "</td></tr>";
+        row += "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Coupon Used: </td><td> Rs. " + data.coupon + "</td></tr><tr><td>Total Price paid after discount: </td><td> Rs. " + price + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
         table += "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
