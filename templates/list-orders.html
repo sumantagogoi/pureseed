@@ -38,7 +38,7 @@
         var row = "<tr><td>Name:</td><td> " + name + "</td></tr><tr><td>Phone: </td><td> " +
           phone + "</td></tr><tr><td>Email: </td><td> " + email + "</td></tr><tr><td>OrderId: </td><td> " + orderId + "</td></tr><b>";
         for (var i = 0; i < orderItems.length; i++) {
-          row += "<b> <tr class='data'><td><b>Item #"+(i+1)+": </b>" + orderItems[i].product +" Qty: "+ orderItems[i].qty + " </td><td>Price:  Rs. " + orderItems[i].price + "</td></tr> </b>";
+          row += "<b> <tr class='data'><td><b>Item #"+(i+1)+": </b>" + orderItems[i].name +" Qty: "+ orderItems[i].qty + " </td><td>Price:  Rs. " + orderItems[i].price + "</td></tr> </b>";
         }
         row += "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Coupon Used: </td><td>" + data.coupon + "</td></tr><tr><td>Total Price paid after discount: </td><td> Rs. " + price + "</td></tr>";
         // Add rows to table
