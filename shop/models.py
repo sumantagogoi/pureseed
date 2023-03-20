@@ -24,7 +24,7 @@ STATUS = (
 
 SIZE = (
     #('kg', 'KG'),
-    ('gram', 'Grams')
+    ('gram', 'Grams'),
 )
 
 DISCOUNT_TYPE = (
