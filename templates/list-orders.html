@@ -34,12 +34,12 @@
         var deliveryPrice = data.shippingPrice;
         currid = id;
         $("#ostatus").val(data.status);
+        $("#courierdata").val(data.courierInfo); 
 
         if (data.status != "dispatched"){
           $("#courier").hide();
         }
-        else {
-          $("#courierdata").val(data.courierInfo);
+        else {          
           $("#courier").show();
         }
 
