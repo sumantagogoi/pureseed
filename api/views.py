@@ -348,7 +348,7 @@ def editOrderStatus(request):
     try:
         order = Order.objects.get(_id = order_id)
         order.status = new_status
-        if new_status == "dispatched":
+        if new_status == "dispatched" or new_status == "cancelled":
             order.courierInfo = request.data['courier-info']
         order.save()
         return Response({"message":"Order Successfully Updated"}, status=status.HTTP_200_OK)
