@@ -69,7 +69,7 @@ def confirmUPI(request):
 
     username = request.user.username
 
-    data = Order.objects.filter(status="upi_unconfirmed")
+    data = Order.objects.filter(status="upi_unconfirmed").select_related('shippingaddress')
 
     context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
