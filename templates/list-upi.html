@@ -142,7 +142,7 @@
         <td>{{ item|pk }}</td>
         <td>{{ item.created_at }}</td>
         <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
-        <td>Phone: {{ item.shippingaddress.phone_number }}, City: {{ item.shippingaddress.phone_number }}, State: {{ item.shippingaddress.state }}</td>
+        <td>Phone: {{ item.shippingaddress.phone_number }}, City: {{ item.shippingaddress.city }}, State: {{ item.shippingaddress.state }}</td>
 
         <td>UPI Unconfirmed</td>
         <td>{{ item.totalPrice }}</td>
