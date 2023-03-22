@@ -123,11 +123,18 @@
       var selectedValue = $(this).val();
       if (selectedValue == 'dispatched' || selectedValue == 'cancelled') {
         $("#courier").show();
-      } else {
+        if (selectedValue == 'cancelled'){
+          $("#inputag").text("Cancellation Note: ");
+        }
+        else{
+          $("#inputag").text("Courier/Consigment Details:  ");
+        }
+      } 
+      
+      else {
         $("#courier").hide();
       }
     });
-
 
   });
 </script>
@@ -212,7 +219,7 @@
           </select>
           <br>
           <div id="courier">
-            <span>{% if status == "Cancelled" %} Cancellation Note: {% else %} Courier/Consigment Details: {% endif %}</span>
+            <span id="inputag">Courier/Consigment Details:</span>
             <input id="courierdata" type="text" value="" />
             <br>
           </div>
