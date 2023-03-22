@@ -85,8 +85,8 @@ def registerUser(request):
             email = data['email'], 
             password = make_password(data['password'])
         )
-        #serializer = UserSerializerWithToken(user, many=False)
-        return Response("new user", status = status.HTTP_200_OK)
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data, status = status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
