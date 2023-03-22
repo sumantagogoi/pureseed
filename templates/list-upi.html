@@ -39,7 +39,7 @@
         row += "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Coupon Used: </td><td>" + data.coupon + "</td></tr><tr><td>Total Price paid after discount: </td><td> Rs. " + price + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
-        table += cancel ? "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>` : 
+        table += !cancel ? "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>` : 
         "<br>Cancellation Note: <input type='text' id='cancelnote' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-danger rightp' onclick=submitcancel(${id})>Cancel Order</button>`;
         // Display table in modal
         $("#order-modal-body").html(table);
