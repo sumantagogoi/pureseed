@@ -61,7 +61,7 @@
   }
 
   function submitform() {
-    if ($("#ostatus").val() != "dispatched") {
+    if ($("#ostatus").val() != "dispatched" || $("#ostatus").val() != "cancelled") {
       $.ajax({
         type: "POST",
         url: 'https://dashboard.manxho.co.in/api/edit_order_status/',
@@ -121,7 +121,7 @@
 
     $('#ostatus').change(function () {
       var selectedValue = $(this).val();
-      if (selectedValue == 'dispatched') {
+      if (selectedValue == 'dispatched' || selectedValue == 'cancelled') {
         $("#courier").show();
       } else {
         $("#courier").hide();
@@ -158,7 +158,7 @@
         <th>Address</th>
         <th>Status</th>
         <th>Total Price</th>
-        <th>Delivery Info</th>
+        <th>{% if status == "Cancelled" %} Cancellation Note {% else %} Delivery Info {% endif %}</th>
       </tr>
     </thead>
     <tbody>
@@ -212,7 +212,7 @@
           </select>
           <br>
           <div id="courier">
-            <span>Courier/Consigment Details:</span>
+            <span>{% if status == "Cancelled" %} Cancellation Note: {% else %} Courier/Consigment Details: {% endif %}</span>
             <input id="courierdata" type="text" value="" />
             <br>
           </div>

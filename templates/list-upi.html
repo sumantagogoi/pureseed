@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 
-  function showmodal(id) {
+  function showmodal(id,cancel) {
     $.ajax({
       type: "GET",
       url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
@@ -39,7 +39,8 @@
         row += "</td></tr><tr><td>Delivery Price: </td><td> Rs. " + deliveryPrice + "</td></tr><tr><td>Coupon Used: </td><td>" + data.coupon + "</td></tr><tr><td>Total Price paid after discount: </td><td> Rs. " + price + "</td></tr>";
         // Add rows to table
         table += row + "</table>";
-        table += "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>`;
+        table += cancel ? "<br>Transaction ID: <input type='text' id='txid' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-info rightp' onclick=submitform(${id})>Confirm Payment</button>` : 
+        "<br>Cancellation Note: <input type='text' id='cancelnote' value='' required /> <input type='hidden' id='oid' value='" + orderId + `'/> <br> <button type='button' class='btn btn-danger rightp' onclick=submitcancel(${id})>Cancel Order</button>`;
         // Display table in modal
         $("#order-modal-body").html(table);
         $("#order-modal").modal("show");
@@ -68,6 +69,28 @@
       });
     }
   }
+
+  function submitcancel(id) {
+    $.ajax({
+        type: "POST",
+        url: 'https://dashboard.manxho.co.in/api/edit_order_status/',
+        headers: {
+          "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
+        },
+        data: {
+          "csrfmiddlewaretoken": $("[name=csrfmiddlewaretoken]").val(),
+          "new_status": "cancelled",
+          "courier-info": $("#cancelnote").val(),
+          "order_id": id
+        },
+        dataType: "json",
+        success: function (data) {
+          $('#form2').submit();
+          //console.log(data)
+        }
+      });
+    }
+  
 
 
 
@@ -124,7 +147,8 @@
         <td>UPI Unconfirmed</td>
         <td>{{ item.totalPrice }}</td>
         <td>
-          <button class="btn btn-primary" onclick="showmodal({{ item|pk }})">Confirm Payment</button>
+          <button class="btn btn-primary" onclick="showmodal({{ item|pk }}, false)">Confirm Payment</button>
+          <button class="btn btn-danger" onclick="showmodal({{ item|pk }}, true)">Cancel Order</button>
         </td>
       </tr>
 
