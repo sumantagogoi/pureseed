@@ -12,7 +12,7 @@
   function showmodal(id,cancel) {
     $.ajax({
       type: "GET",
-      url: `https://dashboard.manxho.co.in/api/users/order/${id}/`,
+      url: `https://dashboard.pureseed.in/api/users/order/${id}/`,
       xhrFields: {
         withCredentials: true
       },
@@ -53,7 +53,7 @@
     if ($('#txid').val().length > 4) {
       $.ajax({
         type: "POST",
-        url: 'https://dashboard.manxho.co.in/api/edit_order/',
+        url: 'https://dashboard.pureseed.in/api/edit_order/',
         headers: {
           "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
         },
@@ -73,7 +73,7 @@
   function submitcancel(id) {
     $.ajax({
         type: "POST",
-        url: 'https://dashboard.manxho.co.in/api/edit_order_status/',
+        url: 'https://dashboard.pureseed.in/api/edit_order_status/',
         headers: {
           "X-CSRFToken": jQuery("[name=csrfmiddlewaretoken]").val(),
         },

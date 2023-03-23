@@ -20,7 +20,7 @@ def index(request):
 
     data = Order.objects.filter(Q(status="order_confirmed") | Q(status="dispatched") | Q(status="processing")).select_related('shippingaddress')
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Confirmed"}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Confirmed"}
 
     return render(request, 'list-orders.html', context)
 
@@ -33,7 +33,7 @@ def items(request):
 
     data = Product.objects.all()
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6",  'data': data}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6",  'data': data}
     return render(request, 'list-items.html', context)
 
 
@@ -45,7 +45,7 @@ def cashReg(request):
 
     data = Order.objects.all()
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'msg': 'cash register'}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'msg': 'cash register'}
 
     return render(request, 'blank.html', context)
 
@@ -58,7 +58,7 @@ def customers(request):
 
     data = User.objects.all()
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
     return render(request, 'list-customers.html', context)
 
@@ -71,7 +71,7 @@ def confirmUPI(request):
 
     data = Order.objects.filter(status="upi_unconfirmed").select_related('shippingaddress')
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data}
 
     return render(request, 'list-upi.html', context)
 
@@ -84,7 +84,7 @@ def cancelledOrders(request):
 
     data = Order.objects.filter(status="cancelled").select_related('shippingaddress')
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Cancelled"}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Cancelled"}
 
     return render(request, 'list-orders.html', context)
 
@@ -96,7 +96,7 @@ def completedOrders(request):
 
     data = Order.objects.filter(status="completed").select_related('shippingaddress')
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Completed"}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'status': "Completed"}
 
     return render(request, 'list-orders.html', context)
 
@@ -124,6 +124,6 @@ def editPin(request):
 
     form = PinCodeForm()
 
-    context={'title': 'Manxho Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'form': form}
+    context={'title': 'Pureseed Dashboard', 'username': username, 'scale': "0.6", 'data': data, 'form': form}
 
     return render(request, 'list-pin.html', context)

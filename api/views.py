@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from rest_framework.views import APIView 
 
-# from backend.manxho.shop.models import OrderItem
+# from backend.pureseed.shop.models import OrderItem
 
 
 from .serializers import CategorySerializer, CouponsSerializer, OrderSerializer, ProductSerializer, UserSerializerWithToken, UserSerializer, OrderSerializer, PinCodeSerializer
@@ -93,7 +93,7 @@ def registerUser(request):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = 'https://api.manxho.co.in/api/users/'
+    callback_url = 'https://api.pureseed.in/api/users/'
     client_class = OAuth2Client
 
 @api_view(['GET'])
@@ -187,7 +187,7 @@ class ForgotPasswordView(APIView):
             subject='Password Reset Link',
             message=message,
             recipient_list=[email],
-            from_email= 'manxho@xynocast.com',
+            from_email= 'websites@xynocast.com',
         )
         return Response({'message':'Reset Link Send Successfully'}, status=status.HTTP_200_OK)
 
